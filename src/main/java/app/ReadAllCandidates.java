@@ -1,27 +1,31 @@
-package app;
+package javaeetutorial.hello;
+ 
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
-
-@WebServlet("/readallcandidates")
-public class ReadAllCandidates extends HttpServlet {
-
-    EntityManagerFactory emf=Persistence.createEntityManagerFactory("jpacandidatecontest");
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) 
-      throws IOException, ServletException {
-        EntityManager em=emf.createEntityManager();
-        em.getTransaction().begin();
-        List<Ehdokas> list=em.createQuery("select e from Ehdokas e").getResultList();
-        em.getTransaction().commit();
-        request.setAttribute("ehdokaslist", list);
-        RequestDispatcher rd=request.getRequestDispatcher("./jsp/readallcandidates.jsp");
-        rd.forward(request, response);
-  }
+ 
+/
+ * Root resource (exposed at "ReadAllCandidates" path)
+ */
+@Path("ReadAllCandidates")
+public class ReadAllCandidates {
+    @Context
+    private UriInfo context;
+ 
+    / Creates a new instance of ReadAllCandidates */
+    public ReadAllCandidates() {
+    }
+    
+    @GET
+    public String get(@Context UriInfo ui) {
+        MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
+        MultivaluedMap<String, String> pathParams = ui.getPathParameters();
+    }
+    /**
+     * Retrieves representation of an instance of helloWorld.HelloWorld
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces("text/html")
+    public String getHtml() {
+        return "<html lang="en"><body><h1>Hello, World!!</h1></body></html>";
+    }
 }
