@@ -18,8 +18,8 @@
 <ol>${ehdokas.miksi_eduskuntaan}</ol>
 <ol>${ehdokas.mita_asioita_haluat_edistaa}</ol>
 <ol>${ehdokas.ammatti}</ol>
-			<a href="/editcandidate?id=${ehdokas.ehdokas_id }">Muokkaa</a>
-            <a href="/deletecandidates?id=${ehdokas.ehdokas_id }">Poista</a>
+			<a href="/jsp/editcandidate.jsp?id=${ehdokas.ehdokas_id }">Muokkaa</a>
+            <a href="/jsp/deletecandidates.jsp?id=${ehdokas.ehdokas_id }">Poista</a>
 
 
 </c:forEach>
