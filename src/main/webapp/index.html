@@ -2,19 +2,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../style.css">
     <title>Hello App Engine</title>
   </head>
-
+<style>
+body {
+background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/5901/6410/01f2/slideshow/unnamed.jpg?1642931347');
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-align: center;
+}
+</style>
   <body>
-    <h1>Hello App Engine!</h1>
+    <h1>Vaalikone</h1>
+<a href='/testi'>Tarkista</a>
+</div>
 
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
-      </tr>
-      <tr>
-        <td><a href='/hello'>The servlet</a></td>
-      </tr>
-    </table>
+<div class="adduser">
+<a href="/jsp/adduser.jsp"><input class="button" type="submit" value="Kirjaudu sisään" /></a></div>
+
+<div class="questions">
+<a href="/model/Questions.java"><input class="button" type="submit" value="Vastaa kysymyksiin" /></a></div>
+
+<div class="candidates">
+<a href="/rest/CandidateService/getCandidates"><input class="button" type="submit" value="Ehdokkaat" /></a></div>
+
+<div class="addcandidate">
+<a href="/jsp/AddCandidate.jsp"><input class="button" style="text-align:center" type="submit" value="Lisää uusi ehdokas" /></a></div>
+<footer><p>© Tea Lyytinen, Jemina Kemppainen, Kirsi Koskinen</p></footer>
   </body>
 </html>
