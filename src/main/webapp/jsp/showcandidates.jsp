@@ -9,7 +9,24 @@
 </head>
 <body>
 <c:forEach var="ehdokas" items="${requestScope.ehdokaslista}" >
-<li>${ehdokas.etunimi}
+<ol>${ehdokas.ehdokas_id}</ol>
+<ol>${ehdokas.etunimi}</ol>
+<ol>${ehdokas.sukunimi}</ol>
+<ol>${ehdokas.puolue}</ol>
+<ol>${ehdokas.kotipaikkakunta}</ol>
+<ol>${ehdokas.ika}</ol>
+<ol>${ehdokas.miksi_eduskuntaan}</ol>
+<ol>${ehdokas.mita_asioita_haluat_edistaa}</ol>
+<ol>${ehdokas.ammatti}</ol>
+			<a href="/editcandidate?id=${ehdokas.ehdokas_id }">Muokkaa</a>
+            <a href="/deletecandidates?id=${ehdokas.ehdokas_id }">Poista</a>
+
+
 </c:forEach>
 </body>
 </html>
+
+
+           
+            
+    
