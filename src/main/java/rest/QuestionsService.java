@@ -19,6 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import data.Candidates;
+import data.Questions;
 
 
 @Path("/QuestionsService")
@@ -40,7 +41,7 @@ HttpServletResponse response;
 		
 		//Read all the rows from table prey. Here the Prey must start with capital, 
 		//because class's name starts. This returns a List of Prey objects.
-		List<Candidates> list=em.createQuery("select a from Questions a").getResultList();
+		List<Questions> list=em.createQuery("select a from Questions a").getResultList();
 		//return list;
 		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showquestions.jsp");
 		request.setAttribute("kysymyslista", list);

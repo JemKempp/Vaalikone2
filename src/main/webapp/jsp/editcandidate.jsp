@@ -30,5 +30,6 @@ Mit‰ asioita haluan edist‰‰?: <input type='text' size="35" name='mita_asioita_ha
 <input type='submit' name='ok' value='Send'> 
 <a href="/rest/CandidateService/getCandidates" class="loginbutton"></a>
 </form>
+
 </body>
 </html>
