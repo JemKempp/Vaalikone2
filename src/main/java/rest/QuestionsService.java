@@ -11,6 +11,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -30,28 +32,64 @@ HttpServletRequest request;
 @Context
 HttpServletResponse response;
 
-	
+
+
+
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone2");
+
 	@GET
 	@Path("/getQuestions")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getQuestions() {
-		EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<Questions> readquestion() {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
+		List<Questions> list = em.createQuery("select a from Questions a").getResultList();
+		em.getTransaction().commit();
+		return list;
+
+	}
+	@DELETE
+    @Path("/DeleteQuestions/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Questions> deleteQuestions(@PathParam("id") int id) {
+        EntityManager em=emf.createEntityManager();
+        em.getTransaction().begin();
+        Candidates f=em.find(Candidates.class, id);
+        if (f!=null) {
+            em.remove(f);//The actual insertion line
+        }
+        em.getTransaction().commit();
+        //Calling the method readFish() of this service
+        List<Candidates> list=readQuestions();
+        return list;
+    }
+}
+//	@GET
+//	@Path("/getQuestions")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public void getQuestions() {
+//		EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 		//And then EntityManager, which can manage the entities.
-		EntityManager em=emf.createEntityManager();
+//		EntityManager em=emf.createEntityManager();
 		
 		//Read all the rows from table prey. Here the Prey must start with capital, 
 		//because class's name starts. This returns a List of Prey objects.
-		List<Questions> list=em.createQuery("select a from Questions a").getResultList();
+//		List<Questions> list=em.createQuery("select a from Questions a").getResultList();
 		//return list;
-		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showquestions.jsp");
-		request.setAttribute("kysymyslista", list);
-        try {
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
+//		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showquestions.jsp");
+//		request.setAttribute("kysymyslista", list);
+//        try {
+//			rd.forward(request, response);
+//		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//			e.printStackTrace();
+//		}
+//	}
+
+
 	
 	
 //	@GET
