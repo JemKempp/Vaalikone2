@@ -19,6 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import data.Candidates;
+import data.Vastaukset;
 
 
 @Path("/VastauksetService")
