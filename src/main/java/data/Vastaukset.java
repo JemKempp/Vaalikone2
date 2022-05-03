@@ -40,3 +40,4 @@ public class Vastaukset implements Serializable{
 	public void setKommentti(String kommentti) {
 		this.kommentti = kommentti;
 	}
+}
