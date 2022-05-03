@@ -11,7 +11,7 @@
 </head>
 <body>
 <h2>Haluatko varmasti poistaa ehdokkaan?</h2>
-    <form action='/app/DeleteCandidates.java' method='post'>
+    <form action='/rest/CandidateService/getCandidates' method='post'>
         <input type="hidden" name="ehdokas_id" value="${sessionScope.ehdokas.ehdokas_id }">
         <input type='submit' name='ok' value='Poista'>
     </form>

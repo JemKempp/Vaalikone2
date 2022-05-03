@@ -31,13 +31,13 @@ public class VastauksetService {
 HttpServletRequest request;
 @Context
 HttpServletResponse response;
-
+EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 	
 	@GET
 	@Path("/getVastaukset")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void getVastaukset() {
-		EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
+
 		//And then EntityManager, which can manage the entities.
 		EntityManager em=emf.createEntityManager();
 		
@@ -55,11 +55,11 @@ HttpServletResponse response;
 		}
 	}
 	
-	@DELETE
+	@GET
     @Path("/DeleteVastaukset/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Vastaukset> deleteVastaukset(@PathParam("id") int id) {
+    public void deleteVastaukset(@PathParam("id") int id) {
         EntityManager em=emf.createEntityManager();
         em.getTransaction().begin();
         Vastaukset f=em.find(Vastaukset.class, id);
@@ -67,9 +67,10 @@ HttpServletResponse response;
             em.remove(f);//The actual insertion line
         }
         em.getTransaction().commit();
+        getVastaukset();
         //Calling the method readFish() of this service
-        List<Vastaukset> list=readVastaukset();
-        return list;
+       // List<Vastaukset> list=getVastaukset();
+        //return list;
     }
 }
 	

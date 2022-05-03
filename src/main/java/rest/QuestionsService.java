@@ -22,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import data.Candidates;
 import data.Questions;
+import data.Vastaukset;
 
 
 @Path("/QuestionsService")
@@ -50,21 +51,22 @@ HttpServletResponse response;
 		return list;
 
 	}
-	@DELETE
+	@GET
     @Path("/DeleteQuestions/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Questions> deleteQuestions(@PathParam("id") int id) {
+    public void deleteQuestions(@PathParam("id") int id) {
         EntityManager em=emf.createEntityManager();
         em.getTransaction().begin();
-        Candidates f=em.find(Candidates.class, id);
+        Questions f=em.find(Questions.class, id);
         if (f!=null) {
             em.remove(f);//The actual insertion line
         }
         em.getTransaction().commit();
+        getQuestions();
         //Calling the method readFish() of this service
-        List<Candidates> list=readQuestions();
-        return list;
+       // List<Vastaukset> list=getVastaukset();
+        //return list;
     }
 }
 //	@GET
@@ -99,4 +101,4 @@ HttpServletResponse response;
 //		String s=getCandidate(id);
 //		return s;
 //	}
-}
+

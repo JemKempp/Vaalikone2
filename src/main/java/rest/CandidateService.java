@@ -21,6 +21,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import data.Candidates;
+import data.Vastaukset;
 
 
 @Path("/CandidateService")
@@ -31,12 +32,13 @@ HttpServletRequest request;
 @Context
 HttpServletResponse response;
 
+EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 	
 	@GET
 	@Path("/getCandidates")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void getCandidates() {
-		EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
+		
 		//And then EntityManager, which can manage the entities.
 		EntityManager em=emf.createEntityManager();
 		
@@ -54,23 +56,24 @@ HttpServletResponse response;
 		}
 	}
 	
-//	@DELETE
-//    @Path("/DeleteCandidates/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public List<Candidates> deleteCandidates(@PathParam("id") int id) {
-//        EntityManager em=emf.createEntityManager();
-//        em.getTransaction().begin();
-//        Candidates f=em.find(Candidates.class, id);
-//        if (f!=null) {
-//            em.remove(f);//The actual insertion line
-//        }
-//        em.getTransaction().commit();
-//        //Calling the method readFish() of this service
-//        List<Candidates> list=readCandidates();
-//        return list;
-//    }
-//}
+	@GET
+    @Path("/DeleteCandidates/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteCandidates(@PathParam("id") int id) {
+        EntityManager em=emf.createEntityManager();
+        em.getTransaction().begin();
+        Candidates f=em.find(Candidates.class, id);
+        if (f!=null) {
+            em.remove(f);//The actual insertion line
+        }
+        em.getTransaction().commit();
+        getCandidates();
+        //Calling the method readFish() of this service
+       // List<Vastaukset> list=getVastaukset();
+        //return list;
+    }
+}
 	
 	
 //	@GET
@@ -80,4 +83,4 @@ HttpServletResponse response;
 //		String s=getCandidate(id);
 //		return s;
 //	}
-}
+
