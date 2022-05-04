@@ -78,21 +78,47 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 @Path("/EditCandidate")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public List<Candidates> EditCandidate(@PathParam("id") int id) {
+public void editCandidate (@PathParam("id") int id) {
 	EntityManager em = emf.createEntityManager();
 	em.getTransaction().begin();
+	@SuppressWarnings("unchecked")
+	List<Candidates> list=em.createQuery("select a from Candidates a").getResultList();
 	Candidates c = em.find(Candidates.class, id);
 
 	if (c != null) {
 		em.merge(c);
 	}
 	em.getTransaction().commit();
-
-	List<Candidates> list = readCandidates();
-	return list;
-
+	//readCandidates();
+	
+	RequestDispatcher rd=request.getRequestDispatcher("/jsp/editcandidate.jsp");
+	request.setAttribute("ehdokaslista", list);
+    try {
+		rd.forward(request, response);
+	} catch (ServletException | IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	
 	}
 }
-	
+}
 
+//@PUT
+//@Path("/EditCandidate")
+//@Produces(MediaType.APPLICATION_JSON)
+//@Consumes(MediaType.APPLICATION_JSON)
+//public List<Candidates> EditCandidate(@PathParam("id") int id) {
+	//EntityManager em = emf.createEntityManager();
+	//em.getTransaction().begin();
+	//Candidates c = em.find(Candidates.class, id);
 
+	//if (c != null) {
+		//em.merge(c);
+	//}
+	//em.getTransaction().commit();
+
+	//List<Candidates> list = readCandidates();
+	//return list;
+
+	//}
+//}
