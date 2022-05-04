@@ -79,7 +79,7 @@ HttpServletResponse response;
 public List<Questions> EditQuestion(@PathParam("id") int id) {
 	EntityManager em = emf.createEntityManager();
 	em.getTransaction().begin();
-	Questions q = em.find(Questions.class, id);
+	Questions q = em.find(Questions.class, Questions.getKysymys_id);
 
 	if (q != null) {
 		em.merge(q);

@@ -35,26 +35,38 @@ HttpServletRequest request;
 HttpServletResponse response;
 EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 	
-	@GET
-	@Path("/getVastaukset")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void readvastaukset() {
-		EntityManager em=emf.createEntityManager();
-		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
-		//return list;
-		em.getTransaction().commit();
-		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showvastaukset.jsp");
-		request.setAttribute("vastauslista", list);
-        try {
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
-			e.printStackTrace();
-		}
+@GET
+@Path("/getVastaukset")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public void readvastaukset() {
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	@SuppressWarnings("unchecked")
+	List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
+	//return list;
+	em.getTransaction().commit();
+	RequestDispatcher rd=request.getRequestDispatcher("/jsp/showvastaukset.jsp");
+	request.setAttribute("vastauslista", list);
+    try {
+		rd.forward(request, response);
+	} catch (ServletException | IOException e) {
+		e.printStackTrace();
 	}
-	
+}
+
+//@GET
+//@Path("/getpena")
+//@Produces(MediaType.APPLICATION_JSON)
+//@Consumes(MediaType.APPLICATION_JSON)
+//public List<Vastaukset> readpena() {
+	//EntityManager em=emf.createEntityManager();
+	//em.getTransaction().begin();
+	//@SuppressWarnings("unchecked")
+	//List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
+	//return list;
+//}
+
 	@GET
     @Path("/DeleteVastaukset/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -77,7 +89,7 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 @Path("/EditVastaukset")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public List<Vastaukset> EditVastaukset(@PathParam("id") int id) {
+public void EditVastaukset(@PathParam("id") int id) {
 	EntityManager em = emf.createEntityManager();
 	em.getTransaction().begin();
 	Vastaukset v = em.find(Vastaukset.class, id);
@@ -87,8 +99,8 @@ public List<Vastaukset> EditVastaukset(@PathParam("id") int id) {
 	}
 	em.getTransaction().commit();
 
-	List<Vastaukset> list = readvastaukset();
-	return list;
+	readvastaukset();
+//	return list;
 
 	}
 }
