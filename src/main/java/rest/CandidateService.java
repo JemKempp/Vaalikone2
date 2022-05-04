@@ -37,6 +37,7 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 	@GET
 	@Path("/getCandidates")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public void getCandidates() {
 		
 		//And then EntityManager, which can manage the entities.
@@ -77,6 +78,7 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 	
 	
 //	@GET
+//moro
 //	@Path("//{}")
 //	@Produces(MediaType.TEXT_PLAIN)
 //	public String getOneLaptop(@PathParam("ehdokas_id") int id) {
