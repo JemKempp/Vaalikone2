@@ -16,7 +16,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 		color: white;
 }
 </style>
-<form action='/rest/VastauksetService/getVastaukset' method='post' accept-charset="utf-8">
+<form action='/rest/VastauksetService/EditVastaukset' method='post' accept-charset="utf-8">
 <p hidden>Ehdokas id: <input type='hidden' name='ehdokas_id' size="35" value='${sessionScope.ehdokas.ehdokas_id}' readonly><br> </p>
 <p hidden>Kysymys id: <input type='hidden' name='kysymys_id' size="35" value='${sessionScope.kysymys.kysymys_id}' readonly><br> </p>
 Vastaus: <input type='text' name='vastaus' size="35" value='${sessionScope.vastaus.vastaus}'><br>

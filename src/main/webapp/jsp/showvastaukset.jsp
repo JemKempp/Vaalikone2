@@ -23,7 +23,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 <ol>${vastaus.vastaus}</ol>
 <ol>${vastaus.kommentti}</ol>
 
-			<a href="/rest/VastauksetService/EditVastaukset/${vastaus.vastaus }">Muokkaa</a>
+			<a href="/rest/VastauksetService/getvastausid/${vastaus.vastaus }">Muokkaa</a>
             <a href="/rest/VastauksetService/DeleteVastaukset/${vastaus.vastaus }">Poista</a>
 
 </c:forEach>

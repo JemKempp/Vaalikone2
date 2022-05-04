@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -84,26 +86,67 @@ public void readvastaukset() {
        // List<Vastaukset> list=getVastaukset();
         //return list;
     }
-
-@PUT
-@Path("/EditVastaukset")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-public void EditVastaukset(@PathParam("id") int id) {
-	EntityManager em = emf.createEntityManager();
-	em.getTransaction().begin();
-	Vastaukset v = em.find(Vastaukset.class, id);
-
-	if (v != null) {
-		em.merge(v);
+	
+	@POST
+	@Path("/EditVastaukset")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void editVastaukset(@FormParam("ehdokas_id")String ehdokas_id, @FormParam("kysymys_id")String kysymys_id, @FormParam("vastaus")String vastaus, 
+			@FormParam("kommentti")String kommentti) {
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
+		//List<Candidates> list = new ArrayList<Candidates>();
+		List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
+		em.getTransaction().commit();
+		//Candidates c = new Candidates(ehdokas_id, sukunimi, etunimi, puolue, kotipaikkakunta, ika, miksi_eduskuntaan, mita_asioita_haluat_edistaa,
+			//	ammatti);
+		request.setAttribute("vastauslista", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editvastaukset.jsp");
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
 	}
-	em.getTransaction().commit();
-
-	readvastaukset();
-//	return list;
-
+	@GET
+	@Path("/getvastausid/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void getVastausId(@PathParam("id")int id) {
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
+		List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
+		em.getTransaction().commit();
+		request.setAttribute("vastauslista", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editvastaukset.jsp");
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
+
+//@PUT
+//@Path("/EditVastaukset")
+//@Produces(MediaType.APPLICATION_JSON)
+//@Consumes(MediaType.APPLICATION_JSON)
+//public void EditVastaukset(@PathParam("id") int id) {
+	//EntityManager em = emf.createEntityManager();
+	//em.getTransaction().begin();
+	//Vastaukset v = em.find(Vastaukset.class, id);
+
+	//if (v != null) {
+		//em.merge(v);
+	//}
+	//em.getTransaction().commit();
+
+	//readvastaukset();
+//	return list;
+
+	//}
+//}
 	
 
 
