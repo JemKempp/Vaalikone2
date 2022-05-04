@@ -13,7 +13,7 @@
 <ol>${kysymys.kysymys}</ol>
 
 			<a href="/jsp/editcandidate.jsp?id=${ehdokas.ehdokas_id }">Muokkaa</a>
-            <a href="/jsp/deletecandidates.jsp?id=${ehdokas.ehdokas_id }">Poista</a>
+            <a href="/rest/QuestionsService/DeleteQuestions/${kysymys.kysymys_id}">Poista</a>
 
 
 </c:forEach>

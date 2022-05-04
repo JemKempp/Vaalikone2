@@ -42,13 +42,20 @@ HttpServletResponse response;
 	@Path("/getQuestions")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Questions> readquestion() {
+	public void readquestion() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		@SuppressWarnings("unchecked")
 		List<Questions> list = em.createQuery("select a from Questions a").getResultList();
 		em.getTransaction().commit();
-		return list;
+		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showquestions.jsp");
+		request.setAttribute("kysymyslista", list);
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	@GET
@@ -63,7 +70,7 @@ HttpServletResponse response;
             em.remove(f);//The actual insertion line
         }
         em.getTransaction().commit();
-        getQuestions();
+        readquestion();
         //Calling the method readFish() of this service
        // List<Vastaukset> list=getVastaukset();
         //return list;
