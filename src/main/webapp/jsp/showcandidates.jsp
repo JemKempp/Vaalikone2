@@ -27,7 +27,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 <ol>${ehdokas.miksi_eduskuntaan}</ol>
 <ol>${ehdokas.mita_asioita_haluat_edistaa}</ol>
 <ol>${ehdokas.ammatti}</ol>
-			<a href="/rest/CandidateService/EditCandidate/${ehdokas.ehdokas_id }">Muokkaa</a>
+			<a href="/rest/CandidateService/getcandidateid/${ehdokas.ehdokas_id }">Muokkaa</a>
             <a href="/rest/CandidateService/DeleteCandidates/${ehdokas.ehdokas_id }">Poista</a>
 
 

@@ -18,7 +18,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 		color: white;
 }
 </style>
-<form action='/rest/CandidateService/getCandidates' method='post' accept-charset="utf-8">
+<form action='/rest/CandidateService/EditCandidate' method='post' accept-charset="utf-8">
 <p hidden>Ehdokas id: <input type='hidden' name='ehdokas_id' size="35" value='${sessionScope.ehdokas.ehdokas_id}' readonly><br> </p>
 Ehdokkaan etunimi: <input type='text' name='etunimi' size="35" value='${sessionScope.ehdokas.etunimi}'><br>
 Ehdokkaan sukunimi: <input type='text' name='sukunimi' size="35" value='${sessionScope.ehdokas.sukunimi}'><br>
@@ -29,7 +29,7 @@ Ammatti: <input type='text' name='ammatti' size="35" value='${sessionScope.ehdok
 Miksi haluan eduskuntaan?: <input type='text' name='miksi_eduskuntaan' size="35" value='${sessionScope.ehdokas.miksi_eduskuntaan}'><br>
 Mit‰ asioita haluan edist‰‰?: <input type='text' size="35" name='mita_asioita_haluat_edistaa' value='${sessionScope.ehdokas.mita_asioita_haluat_edistaa}'><br>
 
-<input type='submit' name='ok' value='Send'> 
+<input type='submit' name='ok' value='Tallenna'> 
 <a href="/rest/CandidateService/getCandidates" class="loginbutton"></a>
 </form>
 
