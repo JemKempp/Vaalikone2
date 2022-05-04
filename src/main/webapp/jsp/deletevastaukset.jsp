@@ -11,7 +11,7 @@
 </head>
 <body>
 <h2>Haluatko varmasti poistaa vastauksen?</h2>
-    <form action='/app/DeleteVastaukset.java' method='post'>
+    <form action='/rest/VastauksetService/getVastaukset' method='post'>
         <input type="hidden" name="vastaus_id" value="${sessionScope.vastaus.vastaus_id }">
         <input type='submit' name='ok' value='Poista'>
     </form>

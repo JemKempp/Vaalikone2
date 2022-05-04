@@ -20,7 +20,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 <ol>${kysymys.kysymys_id}</ol>
 <ol>${kysymys.kysymys}</ol>
 
-			<a href="/jsp/editcandidate.jsp?id=${ehdokas.ehdokas_id }">Muokkaa</a>
+			<a href="/rest/QuestionsService/EditQuestion/${kysymys.kysymys_id }">Muokkaa</a>
             <a href="/rest/QuestionsService/DeleteQuestions/${kysymys.kysymys_id}">Poista</a>
 
 
