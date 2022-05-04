@@ -23,8 +23,8 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 <ol>${vastaus.vastaus}</ol>
 <ol>${vastaus.kommentti}</ol>
 
-			<a href="/jsp/editvastaukset.jsp?id=${vastaus.vastaus }">Muokkaa</a>
-            <a href="/rest/VastauksetService/getVastaukset?id=${vastaus.vastaus }">Poista</a>
+			<a href="/rest/VastauksetService/EditVastaukset/${vastaus.vastaus }">Muokkaa</a>
+            <a href="/rest/VastauksetService/DeleteVastaukset/${vastaus.vastaus }">Poista</a>
 
 </c:forEach>
 </body>

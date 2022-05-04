@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import data.Candidates;
+import data.Questions;
 import data.Vastaukset;
 
 
@@ -38,14 +40,12 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 	@Path("/getCandidates")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void getCandidates() {
-		
-		//And then EntityManager, which can manage the entities.
+	public void readCandidates() {
 		EntityManager em=emf.createEntityManager();
-		
-		//Read all the rows from table prey. Here the Prey must start with capital, 
-		//because class's name starts. This returns a List of Prey objects.
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
 		List<Candidates> list=em.createQuery("select a from Candidates a").getResultList();
+		em.getTransaction().commit();
 		//return list;
 		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showcandidates.jsp");
 		request.setAttribute("ehdokaslista", list);
@@ -69,20 +69,30 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
             em.remove(f);//The actual insertion line
         }
         em.getTransaction().commit();
-        getCandidates();
-        //Calling the method readFish() of this service
-       // List<Vastaukset> list=getVastaukset();
-        //return list;
+        readCandidates();
+       
     }
+
+	
+@PUT
+@Path("/EditCandidate")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public List<Candidates> EditCandidate(@PathParam("id") int id) {
+	EntityManager em = emf.createEntityManager();
+	em.getTransaction().begin();
+	Candidates c = em.find(Candidates.class, id);
+
+	if (c != null) {
+		em.merge(c);
+	}
+	em.getTransaction().commit();
+
+	List<Candidates> list = readCandidates();
+	return list;
+
+	}
 }
 	
-	
-//	@GET
-//moro
-//	@Path("//{}")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String getOneLaptop(@PathParam("ehdokas_id") int id) {
-//		String s=getCandidate(id);
-//		return s;
-//	}
+
 

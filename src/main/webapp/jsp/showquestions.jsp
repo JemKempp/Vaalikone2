@@ -12,10 +12,10 @@
 <ol>${kysymys.kysymys_id}</ol>
 <ol>${kysymys.kysymys}</ol>
 
-			<a href="/jsp/editcandidate.jsp?id=${ehdokas.ehdokas_id }">Muokkaa</a>
+			<a href="/rest/QuestionsService/EditQuestion/${kysymys.kysymys_id }">Muokkaa</a>
             <a href="/rest/QuestionsService/DeleteQuestions/${kysymys.kysymys_id}">Poista</a>
 
-//kokeilu
+
 </c:forEach>
 </body>
 </html>

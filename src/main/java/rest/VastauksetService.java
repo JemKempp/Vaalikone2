@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import data.Candidates;
+import data.Questions;
 import data.Vastaukset;
 
 
@@ -36,21 +38,19 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 	@GET
 	@Path("/getVastaukset")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getVastaukset() {
-
-		//And then EntityManager, which can manage the entities.
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void readvastaukset() {
 		EntityManager em=emf.createEntityManager();
-		
-		//Read all the rows from table prey. Here the Prey must start with capital, 
-		//because class's name starts. This returns a List of Prey objects.
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
 		List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
 		//return list;
+		em.getTransaction().commit();
 		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showvastaukset.jsp");
 		request.setAttribute("vastauslista", list);
         try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -67,19 +67,31 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
             em.remove(f);//The actual insertion line
         }
         em.getTransaction().commit();
-        getVastaukset();
+        readvastaukset();
         //Calling the method readFish() of this service
        // List<Vastaukset> list=getVastaukset();
         //return list;
     }
+
+@PUT
+@Path("/EditVastaukset")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public List<Vastaukset> EditVastaukset(@PathParam("id") int id) {
+	EntityManager em = emf.createEntityManager();
+	em.getTransaction().begin();
+	Vastaukset v = em.find(Vastaukset.class, id);
+
+	if (v != null) {
+		em.merge(v);
+	}
+	em.getTransaction().commit();
+
+	List<Vastaukset> list = readvastaukset();
+	return list;
+
+	}
 }
 	
-	
-//	@GET
-//	@Path("//{}")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String getOneLaptop(@PathParam("ehdokas_id") int id) {
-//		String s=getCandidate(id);
-//		return s;
-//	}
+
 
