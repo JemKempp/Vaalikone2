@@ -26,6 +26,7 @@ import javax.ws.rs.core.MediaType;
 import data.Candidates;
 import data.Questions;
 import data.Vastaukset;
+import jdk.internal.org.jline.reader.Candidate;
 
 
 @Path("/CandidateService")
@@ -74,31 +75,28 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
         readCandidates();
        
     }
-
-	@POST
+	@PUT
 	@Path("/EditCandidate")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void editCandidates(@FormParam("ehdokas_id")String ehdokas_id, @FormParam("sukunimi")String sukunimi, @FormParam("etunimi")String etunimi, 
-			@FormParam("puolue")String puolue, @FormParam("kotipaikkakunta")String kotipaikkakunta, @FormParam("ika")String ika,
-			@FormParam("miksi_eduskuntaan")String miksi_eduskuntaan, @FormParam("mita_asioita_haluat_edistaa")String mita_asioita_haluat_edistaa,
-			@FormParam("ammatti")String ammatti) {
-		EntityManager em=emf.createEntityManager();
-		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		//List<Candidates> list = new ArrayList<Candidates>();
-		List<Candidates> list=em.createQuery("select a from Candidates a").getResultList();
-		em.getTransaction().commit();
-		//Candidates c = new Candidates(ehdokas_id, sukunimi, etunimi, puolue, kotipaikkakunta, ika, miksi_eduskuntaan, mita_asioita_haluat_edistaa,
-			//	ammatti);
-		request.setAttribute("ehdokaslista", list);
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editcandidate.jsp");
-		try {
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
-			e.printStackTrace();
+	public void EditCandidate(@FormParam("id") int id, @FormParam("sukunimi")String sukunimi, @FormParam("etunimi")String etunimi, 
+				@FormParam("puolue")String puolue, @FormParam("kotipaikkakunta")String kotipaikkakunta, @FormParam("ika")String ika,
+				@FormParam("miksi_eduskuntaan")String miksi_eduskuntaan, @FormParam("mita_asioita_haluat_edistaa")String mita_asioita_haluat_edistaa,
+				@FormParam("ammatti")String ammatti) {
+	    EntityManager em = emf.createEntityManager();
+	    em.getTransaction().begin();
+	    Candidates c=em.find(Candidates.class, id);
+	    
+	    if (c != null) {
+	        em.merge(c);
+	    }
+	    
+	    em.getTransaction().commit();
+	   
+	    readCandidates();
 		}
-	}
+	
+	   
 	@GET
 	@Path("/getcandidateid/{id}")
 	@Produces(MediaType.APPLICATION_JSON)

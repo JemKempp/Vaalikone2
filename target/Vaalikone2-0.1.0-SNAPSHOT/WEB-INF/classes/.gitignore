@@ -1,2 +1,7 @@
 /rest/
+<<<<<<< Updated upstream
 /app/
+/META-INF/
+=======
+/data/
+>>>>>>> Stashed changes
