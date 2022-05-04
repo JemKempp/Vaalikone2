@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<style>
+body {
+background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/5901/6410/01f2/slideshow/unnamed.jpg?1642931347');
+        background-repeat: no-repeat;
+        background-size: cover;
+		text-align: center;
+}
+</style>
 <c:forEach var="kysymys" items="${requestScope.kysymyslista}" >
 <ol>${kysymys.kysymys_id}</ol>
 <ol>${kysymys.kysymys}</ol>
