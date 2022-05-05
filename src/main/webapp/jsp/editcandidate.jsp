@@ -21,16 +21,16 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 
 </style>
 
-<form action='/rest/CandidateService/EditCandidate' method='post' accept-charset="utf-8">
-<p hidden>Ehdokas id: <input type='hidden' name='ehdokas_id' size="35" value='${requestScope.ehdokas.ehdokas_id}' readonly><br> </p>
-Ehdokkaan etunimi: <input type='text' name='etunimi' size="35" value='${requestScope.ehdokas.etunimi}'><br>
-Ehdokkaan sukunimi: <input type='text' name='sukunimi' size="35" value='${requestScope.ehdokas.sukunimi}'><br>
-Ehdokkaan puolue: <input type='text' name='puolue' size="35" value='${requestScope.ehdokas.puolue}'><br>
-Kotipaikkakunta: <input type='text' name='kotipaikkakunta' size="35" value='${requestScope.ehdokas.kotipaikkakunta}'><br>
-Ik‰: <input type='text' name='ika' size="35" value='${requestScope.ehdokas.ika}'><br>
-Ammatti: <input type='text' name='ammatti' size="35" value='${requestScope.ehdokas.ammatti}'><br>
-Miksi haluan eduskuntaan?: <input type='text' name='miksi_eduskuntaan' size="35" value='${requestScope.ehdokas.miksi_eduskuntaan}'><br>
-Mit‰ asioita haluan edist‰‰?: <input type='text' size="35" name='mita_asioita_haluat_edistaa' value='${requestScope.ehdokas.mita_asioita_haluat_edistaa}'><br>
+<form action='/rest/CandidateService/editcandidates' method='post' accept-charset="utf-8">
+<p hidden>Ehdokas id: <input type='hidden' name='ehdokas_id' size="35" value='${requestScope.candidateslist.ehdokas_id}' readonly><br> </p>
+Ehdokkaan etunimi: <input type='text' name='etunimi' size="35" value='${requestScope.candidateslist.etunimi}'><br>
+Ehdokkaan sukunimi: <input type='text' name='sukunimi' size="35" value='${requestScope.candidateslist.sukunimi}'><br>
+Ehdokkaan puolue: <input type='text' name='puolue' size="35" value='${requestScope.candidateslist.puolue}'><br>
+Kotipaikkakunta: <input type='text' name='kotipaikkakunta' size="35" value='${requestScope.candidateslist.kotipaikkakunta}'><br>
+Ik‰: <input type='text' name='ika' size="35" value='${requestScope.candidateslist.ika}'><br>
+Ammatti: <input type='text' name='ammatti' size="35" value='${requestScope.candidateslist.ammatti}'><br>
+Miksi haluan eduskuntaan?: <input type='text' name='miksi_eduskuntaan' size="35" value='${requestScope.candidateslist.miksi_eduskuntaan}'><br>
+Mit‰ asioita haluan edist‰‰?: <input type='text' size="35" name='mita_asioita_haluat_edistaa' value='${requestScope.candidateslist.mita_asioita_haluat_edistaa}'><br>
 
 <input type='submit' name='ok' value='Tallenna'> 
 <a href="/rest/CandidateService/getCandidates" class="loginbutton"></a>
