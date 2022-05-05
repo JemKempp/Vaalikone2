@@ -23,6 +23,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import dao.Dao;
 import data.Candidates;
 import data.Questions;
 import data.Vastaukset;
@@ -75,37 +76,49 @@ HttpServletResponse response;
     }
 	
 	@POST
-	@Path("/EditQuestions")
+	@Path("/editquestions")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
 	public void editQuestions(@FormParam("kysymys_id")String kysymys_id, @FormParam("kysymys")String kysymys) {
-		EntityManager em=emf.createEntityManager();
-		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		//List<Candidates> list = new ArrayList<Candidates>();
-		List<Questions> list=em.createQuery("select a from Questions a").getResultList();
-		em.getTransaction().commit();
-		//Candidates c = new Candidates(ehdokas_id, sukunimi, etunimi, puolue, kotipaikkakunta, ika, miksi_eduskuntaan, mita_asioita_haluat_edistaa,
-			//	ammatti);
-		request.setAttribute("kysymyslista", list);
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editquestions.jsp");
+		List<Questions> list = new ArrayList<Questions>();
+		Dao dao = new Dao();
+		Questions c = new Questions(kysymys_id, kysymys);
+		list = dao.editQuestions(c);
+		request.setAttribute("questionslist", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showquestions.jsp");
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	   
 	@GET
-	@Path("/getquestionid/{id}")
+    @Path("/getquestionid/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void getQuestionId(@PathParam("id")int id) {
+        Questions list = new Questions();
+        Dao dao = new Dao();
+        list = dao.getQuestionId(id);
+        request.setAttribute("questionslist", list);
+        RequestDispatcher rd = request.getRequestDispatcher("/jsp/editquestion.jsp");
+        try {
+            rd.forward(request, response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	@POST
+	@Path("/addquestion")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getQuestionId(@PathParam("id")int id) {
-		EntityManager em=emf.createEntityManager();
-		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		List<Questions> list=em.createQuery("select a from Questions a").getResultList();
-		em.getTransaction().commit();
-		request.setAttribute("kysymyslista", list);
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editquestion.jsp");
+	public void addQuestion(@FormParam("kysymys")String kysymys) {
+		Questions c = new Questions();
+		c.setKysymys(kysymys);
+		Dao dao = new Dao();
+		String list = dao.addQuestion(c);		
+		request.setAttribute("questionslist", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/addquestion.jsp");
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -113,26 +126,8 @@ HttpServletResponse response;
 		}
 	}
 }
-
-//@PUT
-//@Path("/EditQuestion")
-//@Produces(MediaType.APPLICATION_JSON)
-//@Consumes(MediaType.APPLICATION_JSON)
-//public List<Questions> EditQuestion(@PathParam("id") int id) {
-	//EntityManager em = emf.createEntityManager();
-	//em.getTransaction().begin();
-	//Questions q = em.find(Questions.class, Questions.getKysymys_id);
-
-	//if (q != null) {
-		//em.merge(q);
-	//}
-	//em.getTransaction().commit();
-
-	//List<Questions> list = readquestion();
-	//return list;
-
-	//}
-//}
+	
+	
 
 
 

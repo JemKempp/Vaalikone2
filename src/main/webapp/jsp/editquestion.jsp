@@ -16,9 +16,9 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 		color: white;
 }
 </style>
-<form action='/rest/QuestionsService/EditQuestions' method='post' accept-charset="utf-8">
-<p hidden>Kysymys id: <input type='hidden' name='kysymys_id' size="35" value='${sessionScope.kysymys.kysymys_id}' readonly><br> </p>
-Kysymys: <input type='text' name='kysymys' size="35" value='${sessionScope.kysymys.kysymys}'><br>
+<form action='/rest/QuestionsService/editquestions' method='post' accept-charset="utf-8">
+<p hidden>Kysymys id: <input type='hidden' name='kysymys_id' size="35" value='${requestScope.questionslist.kysymys_id}' readonly><br> </p>
+Kysymys: <input type='text' name='kysymys' size="35" value='${requestScope.questionslist.kysymys}'><br>
 
 <input type='submit' name='ok' value='Send'> 
 <a href="/rest/QuestionsService/getQuestions" class="loginbutton"></a>

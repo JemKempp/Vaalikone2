@@ -23,6 +23,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import dao.Dao;
 import data.Candidates;
 import data.Questions;
 import data.Vastaukset;
@@ -75,45 +76,71 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
         readCandidates();
        
     }
-	@PUT
-	@Path("/EditCandidate")
+	@POST
+	@Path("/editcandidates")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void EditCandidate(@FormParam("id") int id, @FormParam("sukunimi")String sukunimi, @FormParam("etunimi")String etunimi, 
-				@FormParam("puolue")String puolue, @FormParam("kotipaikkakunta")String kotipaikkakunta, @FormParam("ika")String ika,
-				@FormParam("miksi_eduskuntaan")String miksi_eduskuntaan, @FormParam("mita_asioita_haluat_edistaa")String mita_asioita_haluat_edistaa,
-				@FormParam("ammatti")String ammatti) {
-	    EntityManager em = emf.createEntityManager();
-	    em.getTransaction().begin();
-	    Candidates c=em.find(Candidates.class, id);
-	    
-	    if (c != null) {
-	        em.merge(c);
-	    }
-	    
-	    em.getTransaction().commit();
-	   
-	    readCandidates();
-		}
-	
-	   
-	@GET
-	@Path("/getcandidateid/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void getCandidateId(@PathParam("id")int id) {
-		EntityManager em=emf.createEntityManager();
-		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		List<Candidates> list=em.createQuery("select a from Candidates a").getResultList();
-		em.getTransaction().commit();
-		request.setAttribute("ehdokaslista", list);
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editcandidate.jsp");
+	public void editCandidates(@FormParam("ehdokas_id")String ehdokas_id, @FormParam("sukunimi")String sukunimi, @FormParam("etunimi")String etunimi, 
+			@FormParam("puolue")String puolue, @FormParam("kotipaikkakunta")String kotipaikkakunta, @FormParam("ika")String ika,
+			@FormParam("miksi_eduskuntaan")String miksi_eduskuntaan, @FormParam("mita_asioita_haluat_edistaa")String mita_asioita_haluat_edistaa,
+			@FormParam("ammatti")String ammatti) {
+		List<Candidates> list = new ArrayList<Candidates>();
+		Dao dao = new Dao();
+		Candidates c = new Candidates(ehdokas_id, sukunimi, etunimi, puolue, kotipaikkakunta, ika, miksi_eduskuntaan, mita_asioita_haluat_edistaa,
+				ammatti);
+		list = dao.editCandidates(c);
+		request.setAttribute("candidateslist", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showcandidates.jsp");
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	   
+	@GET
+    @Path("/getcandidateid/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void getCandidateId(@PathParam("id")int id) {
+        Candidates list = new Candidates();
+        Dao dao = new Dao();
+        list = dao.getCandidateId(id);
+        request.setAttribute("candidateslist", list);
+        RequestDispatcher rd = request.getRequestDispatcher("/jsp/editcandidate.jsp");
+        try {
+            rd.forward(request, response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	@POST
+	@Path("/addcandidate")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void addCandidate(@FormParam("sukunimi")String sukunimi, @FormParam("etunimi")String etunimi, 
+			@FormParam("puolue")String puolue, @FormParam("kotipaikkakunta")String kotipaikkakunta, @FormParam("ika")String ika,
+			@FormParam("miksi_eduskuntaan")String miksi_eduskuntaan, @FormParam("mita_asioita_haluat_edistaa")String mita_asioita_haluat_edistaa,
+			@FormParam("ammatti")String ammatti) {
+		Candidates c = new Candidates();
+		c.setSukunimi(sukunimi);
+		c.setEtunimi(etunimi);
+		c.setPuolue(puolue);
+		c.setKotipaikkakunta(kotipaikkakunta);
+		c.setIka(ika);
+		c.setMiksi_eduskuntaan(miksi_eduskuntaan);
+		c.setMita_asioita_haluat_edistaa(mita_asioita_haluat_edistaa);
+		c.setAmmatti(ammatti);
+		Dao dao = new Dao();
+		String list = dao.addCandidate(c);		
+		request.setAttribute("candidateslist", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/addcandidate.jsp");
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 //@PUT
 //@Path("/EditCandidate")
 //@Produces(MediaType.APPLICATION_JSON)
