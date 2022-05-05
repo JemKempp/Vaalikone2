@@ -23,7 +23,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 <div class="container">
 <div class="row">
 <div class="col-9">
-
+<h1> Lis‰‰ uusi ehdokas </h1>
 <form action='/rest/CandidateService/addcandidate' method='post' accept-charset="utf-8"> 
 
 Ehdokkaan etunimi: <input type='text' name='etunimi' size="35" value=''><br>

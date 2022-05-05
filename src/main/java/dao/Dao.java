@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 
 import data.Candidates;
 import data.Questions;
+import data.Vastaukset;
 
 public class Dao {
 
@@ -89,6 +90,46 @@ public class Dao {
 			em.close();
 			return c;
 		}
+	
+	public List<Vastaukset> readVastaukset() {
+	EntityManager em = emf.createEntityManager();
+	em.getTransaction().begin();
+	List<Vastaukset> list = em.createQuery("select a from Vastaukset a").getResultList();
+	em.getTransaction().commit();
+	return list;
 	}
+
+	public String addVastaus(Vastaukset c) {
+	EntityManager em = emf.createEntityManager();
+	em.getTransaction().begin();
+	em.persist(c);
+	em.getTransaction().commit();
+	return null;
+	}
+
+	public List<Vastaukset> editVastaukset(Vastaukset vastaus) {
+	EntityManager em = emf.createEntityManager();
+	em.getTransaction().begin();
+	Vastaukset c = em.find(Vastaukset.class, vastaus.getKysymys_id());
+	if (c!=null) {
+		em.merge(vastaus);
+	}
+	em.getTransaction().commit();
+	List<Vastaukset> list = readVastaukset();
+	em.close();
+	return list;
+	}
+	public Vastaukset getVastausId(int id) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Vastaukset c = em.find(Vastaukset.class, id);
+		em.getTransaction().commit();
+		em.close();
+		return c;
+	}
+
+
+	
+}
 
 

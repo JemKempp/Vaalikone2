@@ -23,6 +23,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import dao.Dao;
 import data.Candidates;
 import data.Questions;
 import data.Vastaukset;
@@ -88,43 +89,36 @@ public void readvastaukset() {
     }
 	
 	@POST
-	@Path("/EditVastaukset")
+	@Path("/editvastaukset")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void editVastaukset(@FormParam("ehdokas_id")String ehdokas_id, @FormParam("kysymys_id")String kysymys_id, @FormParam("vastaus")String vastaus, 
-			@FormParam("kommentti")String kommentti) {
-		EntityManager em=emf.createEntityManager();
-		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		//List<Candidates> list = new ArrayList<Candidates>();
-		List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
-		em.getTransaction().commit();
-		//Candidates c = new Candidates(ehdokas_id, sukunimi, etunimi, puolue, kotipaikkakunta, ika, miksi_eduskuntaan, mita_asioita_haluat_edistaa,
-			//	ammatti);
-		request.setAttribute("vastauslista", list);
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editvastaukset.jsp");
+	public void editVastaukset(@FormParam("kysymys_id")String kysymys_id, @FormParam("vastaus")String vastaus) {
+		List<Vastaukset> list = new ArrayList<Vastaukset>();
+		Dao dao = new Dao();
+		Vastaukset c = new Vastaukset(kysymys_id, vastaus);
+		list = dao.editVastaukset(c);
+		request.setAttribute("vastauksetlista", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showvastaukset.jsp");
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 	@GET
-	@Path("/getvastausid/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void getVastausId(@PathParam("id")int id) {
-		EntityManager em=emf.createEntityManager();
-		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		List<Vastaukset> list=em.createQuery("select a from Vastaukset a").getResultList();
-		em.getTransaction().commit();
-		request.setAttribute("vastauslista", list);
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editvastaukset.jsp");
-		try {
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
-			e.printStackTrace();
-		}
+    @Path("/getvastausid/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void getVastausId(@PathParam("id")int id) {
+        Vastaukset list = new Vastaukset();
+        Dao dao = new Dao();
+        list = dao.getVastausId(id);
+        request.setAttribute("vastauksetlista", list);
+        RequestDispatcher rd = request.getRequestDispatcher("/jsp/editcandidate.jsp");
+        try {
+            rd.forward(request, response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
 	}
 }
 

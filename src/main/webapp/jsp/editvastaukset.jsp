@@ -17,10 +17,10 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 }
 </style>
 <form action='/rest/VastauksetService/EditVastaukset' method='post' accept-charset="utf-8">
-<p hidden>Ehdokas id: <input type='hidden' name='ehdokas_id' size="35" value='${sessionScope.ehdokas.ehdokas_id}' readonly><br> </p>
-<p hidden>Kysymys id: <input type='hidden' name='kysymys_id' size="35" value='${sessionScope.kysymys.kysymys_id}' readonly><br> </p>
-Vastaus: <input type='text' name='vastaus' size="35" value='${sessionScope.vastaus.vastaus}'><br>
-Kommentti: <input type='text' name='kommentti' size="35" value='${sessionScope.vastaus.kommentti}'><br>
+<p hidden>Ehdokas id: <input type='hidden' name='ehdokas_id' size="35" value='${requestScope.candidateslist.ehdokas_id}' readonly><br> </p>
+<p hidden>Kysymys id: <input type='hidden' name='kysymys_id' size="35" value='${requestScope.questionslist.kysymys_id}' readonly><br> </p>
+Vastaus: <input type='text' name='vastaus' size="35" value='${requestScope.vastauslista.vastaus}'><br>
+Kommentti: <input type='text' name='kommentti' size="35" value='${requestScope.vastauslista.kommentti}'><br>
 
 <input type='submit' name='ok' value='Send'> 
 <a href="/rest/VastauksetService/getVastaukset" class="loginbutton"></a>

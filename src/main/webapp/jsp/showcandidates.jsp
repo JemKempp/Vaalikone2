@@ -10,11 +10,12 @@
 <body>
 <style>
 body {
-background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/5901/6410/01f2/slideshow/unnamed.jpg?1642931347');
+background-image: url('https://wallpapercave.com/wp/wp2863773.jpg');
         background-repeat: no-repeat;
         background-size: cover;
 		text-align: center;
 }
+   
 </style>
 
 <c:forEach var="ehdokas" items="${requestScope.ehdokaslista}" >
@@ -32,6 +33,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 
 
 </c:forEach>
+<footer><p>© Tea Lyytinen, Jemina Kemppainen, Kirsi Koskinen</p></footer>
 </body>
 </html>
 

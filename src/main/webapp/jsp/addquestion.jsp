@@ -23,7 +23,7 @@ background-image: url('https://images.adsttc.com/media/images/61ed/244f/5023/590
 <div class="container">
 <div class="row">
 <div class="col-9">
-
+<h1> Lis‰‰ uusi kysymys </h1>
 <form action='/rest/QuestionsService/addquestion' method='post' accept-charset="utf-8"> 
 
 Uusi kysymys: <input type='text' name='kysymys' size="35" value=''><br>
