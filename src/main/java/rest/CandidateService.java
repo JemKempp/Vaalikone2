@@ -88,7 +88,7 @@ EntityManagerFactory emf=Persistence.createEntityManagerFactory("vaalikone2");
 		Candidates c = new Candidates(ehdokas_id, sukunimi, etunimi, puolue, kotipaikkakunta, ika, miksi_eduskuntaan, mita_asioita_haluat_edistaa,
 				ammatti);
 		list = dao.editCandidates(c);
-		request.setAttribute("candidateslist", list);
+		request.setAttribute("ehdokaslista", list);
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showcandidates.jsp");
 		try {
 			rd.forward(request, response);

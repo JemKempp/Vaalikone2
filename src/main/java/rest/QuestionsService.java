@@ -83,7 +83,7 @@ HttpServletResponse response;
 		Dao dao = new Dao();
 		Questions c = new Questions(kysymys_id, kysymys);
 		list = dao.editQuestions(c);
-		request.setAttribute("questionslist", list);
+		request.setAttribute("kysymyslista", list);
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showquestions.jsp");
 		try {
 			rd.forward(request, response);
